@@ -1,8 +1,11 @@
-import { useEffect, useRef, useState } from "react"
-import { hightlightsSlides } from "../constants"
 import gsap from "gsap";
-import { pauseImg, playImg, replayImg } from "../utils";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(ScrollTrigger);
+import { useEffect, useRef, useState } from "react";
+
+import { hightlightsSlides } from "../constants";
+import { pauseImg, playImg, replayImg } from "../utils";
 
 const VideoCarousel = () => {
   const videoRef = useRef([]);
@@ -129,7 +132,10 @@ const VideoCarousel = () => {
         break; 
         case "play":
           setVideo((pre) => ({...pre, isPlaying: !pre.isPlaying}))  
-        break;                 
+        break;  
+        case "pause":
+          setVideo((pre) => ({...pre, isPlaying: !pre.isPlaying}))  
+        break;               
       default:
         return video;
     }
@@ -148,6 +154,9 @@ const VideoCarousel = () => {
                   playsInline={true}
                   preload="auto"
                   muted
+                  className={`${
+                    list.id === 2 && "translate-x-44"}
+                    pointer-events-none`}
                   ref={(el) => (videoRef.current[i] = el)}
                   onEnded={() => 
                     i !== 3
